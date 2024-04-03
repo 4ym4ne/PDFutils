@@ -1,4 +1,4 @@
-package com.pdfutils.service;
+package com.pdfutils.services;
 
 import com.pdfutils.entities.PdfFile;
 import com.pdfutils.repositories.PdfFileRepository;
@@ -54,7 +54,5 @@ public class PdfMergerService {
         }
     }
 
-    public Optional<PdfFile> getPdfFileById(String uuid) {
-        return pdfFileRepository.findById(UUID.fromString(uuid));
-    }
+
 }

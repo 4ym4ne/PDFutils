@@ -1,48 +1,31 @@
 package com.pdfutils.controllers;
 
-
 import com.pdfutils.entities.PdfFile;
+import com.pdfutils.services.PDFFilesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class PdfMergerController {
+@RequestMapping("/pdfs")
+public class PDFFilesController {
 
     @Autowired
-    private com.pdfutils.service.PdfMergerService pdfMergerService;
+    private PDFFilesService pdfFilesService;
 
-    @PostMapping(value = "/merge", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> mergePdfs(@RequestParam("files") List<MultipartFile> files) {
-        if (files.isEmpty()) {
-            return ResponseEntity.badRequest().body("No PDF files provided.");
-        }
-
-        // In the PdfMergerController
-        try {
-            String fileID = pdfMergerService.mergePdfFiles(files);
-            // Return success response with relevant info or file access URL
-            return ResponseEntity.ok().body("Merged File ID: " + fileID);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Failed to merge PDFs: " + e.getMessage());
-        }
-
-    }
-
-    @GetMapping("/pdfs/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getPdfById(@PathVariable String id) {
         try {
-            Optional<PdfFile> pdfFileOpt = pdfMergerService.getPdfFileById(id);
+            Optional<PdfFile> pdfFileOpt = pdfFilesService.getPdfFileById(id);
             if (pdfFileOpt.isPresent()) {
                 PdfFile pdfFile = pdfFileOpt.get();
                 ByteArrayResource resource = new ByteArrayResource(pdfFile.getContent());
