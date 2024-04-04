@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class PDFEncodeController {
 
@@ -24,11 +27,17 @@ public class PDFEncodeController {
         try {
             PdfFile pdfFile = pdfEncodeService.encryptAndSavePdf(file, userPassword, ownerPassword);
 
-            // success message with the file's ID
-            return ResponseEntity.ok("Encrypted PDF saved with ID: " + pdfFile.getId());
+            // Creating a Map to return the file ID in JSON format
+            Map<String, String> response = new HashMap<>();
+            response.put("id", pdfFile.getId().toString());
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to encrypt PDF: " + e.getMessage());
+            // For consistency, consider also returning an error message in JSON format
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Failed to encrypt PDF: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 }

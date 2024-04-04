@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PDFMergerController {
@@ -18,7 +20,7 @@ public class PDFMergerController {
     private PdfMergerService pdfMergerService;
 
     @PostMapping(value = "/merge", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> mergePdfs(@RequestParam("files") List<MultipartFile> files) {
+    public ResponseEntity<?> mergePdfs(@RequestParam("files") List<MultipartFile> files) {
         if (files.isEmpty()) {
             return ResponseEntity.badRequest().body("No PDF files provided.");
         }
@@ -26,8 +28,10 @@ public class PDFMergerController {
         // In the PdfMergerController
         try {
             String fileID = pdfMergerService.mergePdfFiles(files);
+            Map<String, String> response = new HashMap<>();
+            response.put("id", fileID);
             // Return success response with relevant info or file access URL
-            return ResponseEntity.ok().body("Merged File ID: " + fileID);
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
