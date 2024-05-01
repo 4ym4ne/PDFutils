@@ -2,6 +2,7 @@ package com.pdfutils.services;
 
 import com.pdfutils.domain.PdfFile;
 import com.pdfutils.repositories.PdfFileRepository;
+import com.pdfutils.repositories.UserRepository;
 import com.pdfutils.utils.PDFEncode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class PDFEncodeService {
 
     @Autowired
     private PdfFileRepository pdfFileRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public PdfFile encryptAndSavePdf(MultipartFile file, String userPassword, String ownerPassword) throws Exception {
         // Temporary save the uploaded file to process
@@ -34,6 +37,7 @@ public class PDFEncodeService {
         pdfFile.setDate(new Date().toInstant());
         pdfFile.setType("application/pdf");
         pdfFile.setContent(encryptedContent);
+        pdfFile.setUser(userRepository.findByUsername("admin").orElseThrow());
 
         return pdfFileRepository.save(pdfFile);
     }
