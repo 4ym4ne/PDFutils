@@ -5,6 +5,7 @@ import com.pdfutils.repositories.PdfFileRepository;
 import com.pdfutils.repositories.UserRepository;
 import com.pdfutils.utils.PDFEncode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +38,7 @@ public class PDFEncodeService {
         pdfFile.setDate(new Date().toInstant());
         pdfFile.setType("application/pdf");
         pdfFile.setContent(encryptedContent);
+
         pdfFile.setUser(userRepository.findByUsername("admin").orElseThrow());
 
         return pdfFileRepository.save(pdfFile);
