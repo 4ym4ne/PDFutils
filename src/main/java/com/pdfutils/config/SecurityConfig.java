@@ -37,7 +37,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/").hasAuthority("SCOPE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "login").permitAll()
                         .anyRequest().authenticated())
                 .csrf(
                         AbstractHttpConfigurer::disable

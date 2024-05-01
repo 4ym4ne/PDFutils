@@ -23,7 +23,7 @@ public class TokenController {
             LoginResponse loginResponse = authService.authenticate(loginRequest);
             return ResponseEntity.ok(loginResponse);
         } catch (Exception e) {
-            return ResponseEntity.status(401).build();
+            return ResponseEntity.status(403).build();
         }
     }
 }
