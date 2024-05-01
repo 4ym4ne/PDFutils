@@ -1,8 +1,10 @@
 package com.pdfutils.domain;
 
+import com.pdfutils.domain.DTO.login.LoginRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Set;
 import java.util.UUID;
@@ -29,4 +31,7 @@ public class User {
     )
     private Set<Role> roleSet;
 
+    public boolean check(LoginRequest loginRequest, BCryptPasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequest.password(), this.password);
+    }
 }
