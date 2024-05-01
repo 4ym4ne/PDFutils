@@ -1,4 +1,4 @@
-package com.pdfutils.entities;
+package com.pdfutils.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

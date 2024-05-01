@@ -1,6 +1,6 @@
 package com.pdfutils.controllers;
 
-import com.pdfutils.entities.PdfFile;
+import com.pdfutils.domain.PdfFile;
 import com.pdfutils.services.PDFEncodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

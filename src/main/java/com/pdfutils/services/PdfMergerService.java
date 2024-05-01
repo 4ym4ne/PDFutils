@@ -1,6 +1,6 @@
 package com.pdfutils.services;
 
-import com.pdfutils.entities.PdfFile;
+import com.pdfutils.domain.PdfFile;
 import com.pdfutils.repositories.PdfFileRepository;
 import com.pdfutils.utils.PdfMerger;
 import org.apache.commons.io.FilenameUtils;

@@ -1,6 +1,6 @@
 package com.pdfutils.services;
 
-import com.pdfutils.entities.PdfFile;
+import com.pdfutils.domain.PdfFile;
 import com.pdfutils.repositories.PdfFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

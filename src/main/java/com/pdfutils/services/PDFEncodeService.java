@@ -1,13 +1,12 @@
 package com.pdfutils.services;
 
-import com.pdfutils.entities.PdfFile;
+import com.pdfutils.domain.PdfFile;
 import com.pdfutils.repositories.PdfFileRepository;
 import com.pdfutils.utils.PDFEncode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
